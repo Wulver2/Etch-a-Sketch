@@ -13,7 +13,10 @@
         let container = document.querySelector(".container");
 
         function changeColor(node) {
-            node.style.background = "navy";
+            node.style.background = `rgb(
+                ${Math.floor(Math.random() * 255)}, 
+                ${Math.floor(Math.random() * 255)}, 
+                ${Math.floor(Math.random() * 255)})`;
         }
         //will create a num x num grid with the event
         function createGrid(num) {

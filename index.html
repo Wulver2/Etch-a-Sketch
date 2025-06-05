@@ -7,24 +7,56 @@
     <title>Document</title>
 </head>
 <body>
+    <button onclick="changeGridSize()">New grid size?</button>
     <div class="container"></div>
     <script>
         let container = document.querySelector(".container");
-        
+
         function changeColor(node) {
             node.style.background = "navy";
         }
-
-        for(let c = 0; c < 16; c++) { 
-            let col = document.createElement("div");
-            col.className = "column";
-            for(let r = 0; r < 16; r++) {
-                let row = document.createElement("div");
-                row.className = "row";
-                col.appendChild(row);
+        //will create a num x num grid with the event
+        function createGrid(num) {
+            for(let c = 0; c < num; c++) { 
+                let col = document.createElement("div");
+                col.className = "column";
+                for(let r = 0; r < num; r++) {
+                    let row = document.createElement("div");
+                    row.className = "row";
+                    col.appendChild(row);
+                }
+                container.appendChild(col);
             }
-            container.appendChild(col);
+            let boxes = document.querySelectorAll(".row");
+            boxes.forEach(box => {
+                box.addEventListener("mouseover", function () {
+                changeColor(box);
+                });
+            });
         }
+        function removeGrid() {
+            while(container.firstChild) {
+                container.removeChild(container.lastChild);
+            }
+        }
+
+        function changeGridSize() {
+            let num = prompt("Choose a number between 0 and 100");
+            num = Number(num);
+            //error checking
+            while(Number.isNaN(num)) {
+                num = prompt(
+                    "Sorry that is not a number. Pleae enter a number between 0 and 100");
+            }
+            while(num < 0 || num > 100) {
+                num = prompt(
+                    "Sorry that is number isn't within range. Please enter a number between 0 and 100");
+            }
+            removeGrid();
+            createGrid(num);
+        }
+        //create the initial 16x16 grid
+        createGrid(16);
 
         let boxes = document.querySelectorAll(".row");
         boxes.forEach(box => {
